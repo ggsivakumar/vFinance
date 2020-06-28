@@ -46,10 +46,10 @@ namespace vFinanceAPI.Model
         public string ReferenceContactNumber { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("loans")]
         public List<string> Loans { get; set; }
 
-        [BsonIgnore]
-        [BsonElement("loans")]
+        [BsonIgnore]        
         public List<Loan> LoanList { get; set; }
       
     }

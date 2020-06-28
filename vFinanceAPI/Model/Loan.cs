@@ -34,13 +34,13 @@ namespace vFinanceAPI.Model
         public decimal InterestRate { get; set; }
 
         [BsonElement("interestAmount")]
-        public string InterestAmount { get; set; }
+        public decimal InterestAmount { get; set; }
 
         [BsonElement("noOfInstallments")]
-        public string Installments { get; set; }
+        public int Installments { get; set; }
 
         [BsonElement("loanPerInstallment")]
-        public string LoanPerInstallment { get; set; }
+        public decimal LoanPerInstallment { get; set; }
 
         [BsonElement("startDate")]
         public DateTime StartDate { get; set; }
@@ -49,10 +49,10 @@ namespace vFinanceAPI.Model
         public DateTime EndDate { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("loanCollections")]
         public List<string> LoanCollections { get; set; }
 
-        [BsonIgnore]
-        [BsonElement("loanCollections")]
+        [BsonIgnore]       
         public List<LoanCollection> LoanCollectionList { get; set; }
     }
 }

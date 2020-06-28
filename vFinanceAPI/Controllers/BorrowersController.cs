@@ -15,10 +15,12 @@ namespace vFinanceAPI.Controllers
     {
         private readonly BorrowerService _borrowerService;
         private readonly LoanService _loanService;
-        public BorrowersController(BorrowerService bService,LoanService lService)
+        private readonly CollectionService _collectionService;
+        public BorrowersController(BorrowerService bService,LoanService lService,CollectionService cService)
         {
             _borrowerService = bService;
             _loanService = lService;
+            _collectionService = cService;
         }
 
         [HttpGet]
@@ -39,14 +41,25 @@ namespace vFinanceAPI.Controllers
 
             if (borrower.Loans.Count > 0)
             {
-                var tempList = new List<Loan>();
+                var loanList = new List<Loan>();
                 foreach (var loanId in borrower.Loans)
                 {
-                    var course = await _loanService.GetByIdAsync(loanId);
-                    if (course != null)
-                        tempList.Add(course);
+                    var loan = await _loanService.GetByIdAsync(loanId);
+                    if (loan != null)
+                    {
+                        loan.LoanCollectionList = new List<LoanCollection>();
+                        foreach(var collectionId in loan.LoanCollections)
+                        {
+                            var collection = await _collectionService.GetByIdAsync(collectionId);
+                            if(collection != null)
+                            {
+                                loan.LoanCollectionList.Add(collection);
+                            }
+                        }
+                        loanList.Add(loan);
+                    }
                 }
-                borrower.LoanList = tempList;
+                borrower.LoanList = loanList;
             }
 
             return Ok(borrower);
