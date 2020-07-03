@@ -11,6 +11,7 @@ namespace vFinanceAPI.Model
         public string LoansCollectionName { get; set; }
         public string CollectionsCollectionName { get; set; }
         public string DocumentCollectionName { get; set; }
+        public string UserCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }
@@ -21,6 +22,7 @@ namespace vFinanceAPI.Model
         string LoansCollectionName { get; set; }
         string CollectionsCollectionName { get; set; }
         string DocumentCollectionName { get; set; }
+        string UserCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
     }
