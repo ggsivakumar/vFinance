@@ -28,6 +28,14 @@ namespace vFinanceAPI.Services
             return await _collection.Find<LoanCollection>(s => s.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<List<LoanCollection>> GetByDateAsync(DateTime fromDate,DateTime toDate,string status)
+        {
+            var loanCollection = await _collection.Find<LoanCollection>(s => s.InstallmentDate >= fromDate && s.InstallmentDate <= toDate).ToListAsync();
+            loanCollection = loanCollection.FindAll(s => s.Status == status);
+            return loanCollection;            
+                    
+        }
+
         public async Task<LoanCollection> CreateAsync(LoanCollection collation)
         {
             await _collection.InsertOneAsync(collation);

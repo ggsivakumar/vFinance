@@ -26,6 +26,15 @@ namespace vFinanceAPI.Controllers
             var loans = await _collectionService.GetAllAsync();
             return Ok(loans);
         }
+
+
+        [HttpGet("{fromDate}/{toDate}/{status}")]
+        public async Task<ActionResult<IEnumerable<LoanCollection>>> GetAllByDate(DateTime fromDate, DateTime toDate, string status)
+        {
+            var loans = await _collectionService.GetByDateAsync(fromDate, toDate, status);
+            return Ok(loans);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<LoanCollection>> GetById(string id)
         {

@@ -69,6 +69,7 @@ namespace vFinanceAPI
             services.AddScoped<BorrowerService>();
             services.AddScoped<LoanService>();
             services.AddScoped<CollectionService>();
+            services.AddScoped<DocumentService>();
             services.AddControllers();
 
             #endregion

@@ -27,7 +27,7 @@ namespace vFinanceAPI.Services
         {
             await _document.InsertOneAsync(document);
             return document;
-        }
+        }      
 
         public async Task DeleteAsync(string id)
         {

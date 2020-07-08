@@ -43,5 +43,17 @@ namespace vFinanceAPI.Controllers
             await _documentService.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var document = await _documentService.GetByIdAsync(id);
+            if (document == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(document);
+        }
     }
 }
