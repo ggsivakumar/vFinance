@@ -15,6 +15,10 @@ namespace vFinanceAPI.Model
         [BsonElement("collectionId")]
         public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("loanId")]
+        public string LoanId { get; set; }
+
         [BsonElement("collectionType")]       
         public string CollectionType { get; set; }
 

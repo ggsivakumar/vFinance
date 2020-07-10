@@ -28,6 +28,11 @@ namespace vFinanceAPI.Services
             return await _collection.Find<LoanCollection>(s => s.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<List<LoanCollection>> GetByLoanIdAsync(string loanId)
+        {
+            return await _collection.Find(s => s.LoanId == loanId).ToListAsync();
+        }
+
         public async Task<List<LoanCollection>> GetByDateAsync(DateTime fromDate,DateTime toDate,string status)
         {
             var loanCollection = await _collection.Find<LoanCollection>(s => s.InstallmentDate >= fromDate && s.InstallmentDate <= toDate).ToListAsync();
@@ -50,6 +55,11 @@ namespace vFinanceAPI.Services
         public async Task DeleteAsync(string id)
         {
             await _collection.DeleteOneAsync(s => s.Id == id);
+        }
+
+        public async Task DeleteAllAsync(string loanId)
+        {
+            await _collection.DeleteManyAsync(s => s.LoanId == loanId);
         }
     }
 

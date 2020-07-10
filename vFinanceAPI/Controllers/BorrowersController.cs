@@ -39,28 +39,24 @@ namespace vFinanceAPI.Controllers
                 return NotFound();
             }
 
-            if (borrower.Loans.Count > 0)
+            var loans = await _loanService.GetByBorrowerIdAsync(id);
+            if(loans.Any())
             {
-                var loanList = new List<Loan>();
-                foreach (var loanId in borrower.Loans)
+                borrower.Loans = new List<Loan>();
+                foreach(var loan in loans)
                 {
-                    var loan = await _loanService.GetByIdAsync(loanId);
-                    if (loan != null)
+                    var collections = await _collectionService.GetByLoanIdAsync(loan.Id);
+                    if(collections.Any())
                     {
-                        loan.LoanCollectionList = new List<LoanCollection>();
-                        foreach(var collectionId in loan.LoanCollections)
+                        loan.LoanCollections = new List<LoanCollection>();
+                        foreach(var collection in collections)
                         {
-                            var collection = await _collectionService.GetByIdAsync(collectionId);
-                            if(collection != null)
-                            {
-                                loan.LoanCollectionList.Add(collection);
-                            }
+                            loan.LoanCollections.Add(collection);
                         }
-                        loanList.Add(loan);
                     }
+                    borrower.Loans.Add(loan);
                 }
-                borrower.LoanList = loanList;
-            }
+            } 
 
             return Ok(borrower);
         }

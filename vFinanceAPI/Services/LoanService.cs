@@ -28,6 +28,11 @@ namespace vFinanceAPI.Services
             return await _loan.Find<Loan>(s => s.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<List<Loan>> GetByBorrowerIdAsync(string borrowerId)
+        {
+            return await _loan.Find<Loan>(s => s.BorrowerId == borrowerId).ToListAsync();
+        }
+
         public async Task<Loan> CreateAsync(Loan Loan)
         {
             await _loan.InsertOneAsync(Loan);

@@ -15,6 +15,10 @@ namespace vFinanceAPI.Model
         [BsonElement("loanId")]
         public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("borrowerId")]
+        public string BorrowerId { get; set; }
+
         [BsonElement("loanCategory")]
         [Required(ErrorMessage = "Loan Category is required.")]
         public string LoanCategory { get; set; }
@@ -48,11 +52,7 @@ namespace vFinanceAPI.Model
         [BsonElement("endDate")]
         public DateTime EndDate { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        [BsonElement("loanCollections")]
-        public List<string> LoanCollections { get; set; }
-
         [BsonIgnore]       
-        public List<LoanCollection> LoanCollectionList { get; set; }
+        public List<LoanCollection> LoanCollections { get; set; }
     }
 }

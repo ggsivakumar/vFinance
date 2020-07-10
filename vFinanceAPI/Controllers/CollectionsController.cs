@@ -46,17 +46,17 @@ namespace vFinanceAPI.Controllers
             return Ok(collection);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(LoanCollection loanCollection)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> Create(LoanCollection loanCollection)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            await _collectionService.CreateAsync(loanCollection);
-            return Ok(loanCollection);
-        }
+        //    await _collectionService.CreateAsync(loanCollection);
+        //    return Ok(loanCollection);
+        //}
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, LoanCollection updatedLoanCollection)
@@ -76,16 +76,16 @@ namespace vFinanceAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-            var loan = await _collectionService.GetByIdAsync(id);
-            if (loan == null)
-            {
-                return NotFound();
-            }
-            await _collectionService.DeleteAsync(id);
-            return NoContent();
-        }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(string id)
+        //{
+        //    var loan = await _collectionService.GetByIdAsync(id);
+        //    if (loan == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    await _collectionService.DeleteAsync(id);
+        //    return NoContent();
+        //}
     }
 }

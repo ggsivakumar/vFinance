@@ -37,18 +37,17 @@ namespace vFinanceAPI.Controllers
                 return NotFound();
             }
 
-            if (loan.LoanCollections.Count > 0)
+            var collections = await _collectionService.GetByLoanIdAsync(id);
+            if(collections.Any())
             {
-                var tempList = new List<LoanCollection>();
-                foreach (var collectionId in loan.LoanCollections)
+                loan.LoanCollections = new List<LoanCollection>();
+                foreach(var collection in collections)
                 {
-                    var collection = await _collectionService.GetByIdAsync(collectionId);
-                    if (collection != null)
-                        tempList.Add(collection);
+                    loan.LoanCollections.Add(collection);
                 }
-                loan.LoanCollectionList = tempList;
-            }
 
+            }
+          
             return Ok(loan);
         }
 
@@ -60,7 +59,18 @@ namespace vFinanceAPI.Controllers
                 return BadRequest();
             }
 
-            await _loanService.CreateAsync(loan);
+            var newLoan = await _loanService.CreateAsync(loan);
+            if(newLoan != null)
+            {
+                if(loan.LoanCollections.Any())
+                {
+                    foreach(var collection in loan.LoanCollections)
+                    {
+                        collection.LoanId = newLoan.Id;
+                        await _collectionService.CreateAsync(collection);
+                    }
+                }
+            }
             return Ok(loan);
         }
 
@@ -90,6 +100,13 @@ namespace vFinanceAPI.Controllers
             {
                 return NotFound();
             }
+
+            var collections = await _collectionService.GetByLoanIdAsync(loan.Id);
+            if(collections.Any())
+            {
+                await _collectionService.DeleteAllAsync(loan.Id);
+            }
+
             await _loanService.DeleteAsync(id);
             return NoContent();
         }
